@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://aksh.ar" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     /* ─── Design Tokens (mirroring the Flutter Candy Glass palette) ─────────── */
@@ -42,7 +42,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Nunito', system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       color: var(--slate-900);
       background: #f0f0f8;
       overflow-x: hidden;
@@ -117,12 +117,27 @@
       z-index: 100;
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       font-weight: 900;
-      font-size: 1.4rem;
-      color: var(--vivid-blue);
+      font-size: 1.45rem;
+      color: var(--slate-900);
       text-decoration: none;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      transition: opacity 0.18s;
+    }
+    .nav-logo:hover {
+      opacity: 0.85;
+    }
+    .brand-ar {
+      color: var(--vivid-pink);
+      font-weight: 900;
+    }
+    .brand-sparkle {
+      font-size: 0.8em;
+      margin-left: 2px;
+      filter: drop-shadow(0 2px 4px rgba(216, 27, 96, 0.25));
     }
     .nav-links {
       display: flex;
@@ -226,11 +241,11 @@
       margin-bottom: 8px;
     }
     .hero-wordmark {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       font-weight: 900;
       font-size: clamp(3.2rem, 5.5vw, 5.5rem);
       color: var(--slate-900);
-      letter-spacing: -2.5px;
+      letter-spacing: -2px;
       line-height: 1;
       animation: fadeUp 0.7s 0.1s ease both;
     }
@@ -768,11 +783,14 @@
       gap: 14px;
     }
     .footer-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       font-weight: 900;
-      font-size: 1.4rem;
-      color: var(--vivid-blue);
+      font-size: 1.45rem;
+      color: var(--slate-900);
       text-decoration: none;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
     }
     .footer-links {
       display: flex;
@@ -835,13 +853,13 @@
     <div class="panel panel-left">
       <!-- Integrated Frosted Navbar inside left panel -->
       <nav class="navbar" aria-label="Main navigation">
-        <a href="/" class="nav-logo" aria-label="Akshar home">Akshar</a>
+        <a href="/" class="nav-logo" aria-label="AkshAR home">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></a>
         <ul class="nav-links" role="list">
           <li><a href="#features">Features</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="privacy-policy.html">Privacy</a></li>
         </ul>
-        <a href="#download" class="btn-nav-cta" aria-label="Download Akshar app">
+        <a href="#download" class="btn-nav-cta" aria-label="Download AkshAR app">
           ✨ Download
         </a>
       </nav>
@@ -852,7 +870,7 @@
         </div>
 
         <div class="hero-wordmark-wrap">
-          <h1 class="hero-wordmark" id="hero-heading">Akshar</h1>
+          <h1 class="hero-wordmark" id="hero-heading">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></h1>
         </div>
 
         <p class="hero-tagline">Learn Letters. See Magic.</p>
@@ -1026,14 +1044,14 @@
   <!-- ── Footer ───────────────────────────────────────────────────────────── -->
   <footer>
     <div class="footer-inner">
-      <a href="/" class="footer-logo" aria-label="Akshar home">Akshar</a>
+      <a href="/" class="footer-logo" aria-label="AkshAR home">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></a>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="mailto:hello@aksh.ar">Contact</a>
         <a href="#features">Features</a>
         <a href="#about">About</a>
       </nav>
-      <p class="footer-copy">© 2025 Akshar. Made with ❤️ for curious little minds.</p>
+      <p class="footer-copy">© 2026 AkshAR. Made with ❤️ for curious little minds.</p>
     </div>
   </footer>
 

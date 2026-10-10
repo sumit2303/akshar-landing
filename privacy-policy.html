@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://aksh.ar/privacy-policy.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -31,7 +31,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Nunito', system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       color: var(--slate-900);
       background: #f0f0f8;
       overflow-x: hidden;
@@ -73,9 +73,15 @@
       outline: 1.5px solid rgba(255,255,255,0.75); outline-offset: -1.5px;
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem;
-      color: var(--vivid-blue); text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-weight: 900; font-size: 1.45rem;
+      color: var(--slate-900); text-decoration: none;
+      letter-spacing: -0.3px; display: inline-flex; align-items: center;
+      transition: opacity 0.18s;
     }
+    .nav-logo:hover { opacity: 0.85; }
+    .brand-ar { color: var(--vivid-pink); font-weight: 900; }
+    .brand-sparkle { font-size: 0.8em; margin-left: 2px; }
     .btn-back {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 9px 18px; border-radius: var(--radius-pill);
@@ -102,7 +108,8 @@
       letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 22px;
     }
     .page-title {
-      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-weight: 900;
       font-size: clamp(2rem, 5vw, 3.2rem); color: var(--slate-900);
       letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px;
     }
@@ -213,7 +220,7 @@
 
   <!-- Navbar -->
   <nav class="navbar" aria-label="Page navigation">
-    <a href="/" class="nav-logo" aria-label="Akshar home">Akshar</a>
+    <a href="/" class="nav-logo" aria-label="AkshAR home">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></a>
     <a href="/" class="btn-back" aria-label="Back to home">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="15 18 9 12 15 6"></polyline>
@@ -428,7 +435,7 @@
       <a href="privacy-policy.html" aria-current="page">Privacy Policy</a>
       <a href="mailto:hello@aksh.ar">Contact</a>
     </nav>
-    <p class="footer-copy">© 2025 Akshar. Made with ❤️ for curious little minds.</p>
+    <p class="footer-copy">© 2026 AkshAR. Made with ❤️ for curious little minds.</p>
   </footer>
 
 </div><!-- /page -->
