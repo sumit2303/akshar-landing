@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Akshar</title>
+  <meta name="description" content="Akshar Privacy Policy. We collect no personal data. Akshar is a safe, offline AR learning app for children." />
+  <link rel="canonical" href="https://aksh.ar/privacy-policy.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --pink:       #FFB4D6;
+      --aqua:       #80D8FF;
+      --yellow:     #FFF176;
+      --lilac:      #D1C4E9;
+      --mint:       #A7F3D0;
+      --vivid-pink: #D81B60;
+      --vivid-blue: #0277BD;
+      --violet:     #6C5CE7;
+      --slate-900:  #0F172A;
+      --slate-700:  #334155;
+      --slate-500:  #64748B;
+      --glass-fill: rgba(255,255,255,0.62);
+      --blur:       20px;
+      --radius-card: 28px;
+      --radius-pill: 50px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--slate-900);
+      background: #f0f0f8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Candy Glass Wallpaper */
+    .wallpaper {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 5% 10%,   rgba(255,180,214,0.34) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 65% at 95% 8%,   rgba(128,216,255,0.27) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 82% 48%,  rgba(255,241,118,0.22) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 75% at 8%  88%,  rgba(209,196,233,0.30) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 65% at 92% 92%,  rgba(167,243,208,0.25) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.48) 50%, rgba(255,255,255,0.58) 100%);
+      background-color: #fafafe;
+    }
+    .wallpaper::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.45) 70%, rgba(255,255,255,0.05) 100%);
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 16px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 860px; margin: 16px auto 0; padding: 0 8px 0 20px; height: 60px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.95), 0 4px 24px rgba(0,0,0,0.09);
+      outline: 1.5px solid rgba(255,255,255,0.75); outline-offset: -1.5px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem;
+      color: var(--vivid-blue); text-decoration: none;
+    }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.60); font-weight: 800; font-size: 0.88rem;
+      color: var(--slate-700); text-decoration: none;
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 2px 8px rgba(0,0,0,0.07);
+      transition: background 0.18s, transform 0.18s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.85); transform: translateX(-2px); }
+
+    /* Content wrapper */
+    .content {
+      max-width: 860px; margin: 0 auto; padding: 56px 24px 80px;
+    }
+
+    /* Hero badge */
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 12px rgba(0,0,0,0.07);
+      font-weight: 800; font-size: 0.8rem; color: var(--vivid-blue);
+      letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 22px;
+    }
+    .page-title {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(2rem, 5vw, 3.2rem); color: var(--slate-900);
+      letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-subtitle {
+      font-size: 1.05rem; font-weight: 600; color: var(--slate-500); margin-bottom: 36px; line-height: 1.6;
+    }
+    .last-updated {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 700; color: var(--slate-500);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85); margin-bottom: 40px;
+    }
+
+    /* TLDR card */
+    .tldr-card {
+      padding: 28px 32px; border-radius: var(--radius-card);
+      background: rgba(167,243,208,0.35);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.90), 0 8px 28px rgba(15,157,88,0.10);
+      outline: 1.5px solid rgba(255,255,255,0.75); outline-offset: -1.5px;
+      margin-bottom: 40px;
+    }
+    .tldr-title {
+      font-size: 1rem; font-weight: 900; color: #065F46; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .tldr-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .tldr-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; font-weight: 700; color: #064E3B; line-height: 1.5;
+    }
+    .tldr-list li::before { content: '✓'; color: #059669; font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+
+    /* Policy sections */
+    .policy-card {
+      padding: 32px; border-radius: var(--radius-card);
+      background: var(--glass-fill);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.88), 0 6px 24px rgba(0,0,0,0.06);
+      outline: 1.5px solid rgba(255,255,255,0.70); outline-offset: -1.5px;
+      margin-bottom: 20px;
+    }
+    .policy-section-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--vivid-blue); color: #fff; font-weight: 900; font-size: 0.8rem;
+      margin-bottom: 12px;
+    }
+    .policy-section-title {
+      font-size: 1.15rem; font-weight: 900; color: var(--slate-900); margin-bottom: 14px;
+    }
+    .policy-body {
+      font-size: 0.97rem; font-weight: 600; color: var(--slate-700); line-height: 1.75;
+    }
+    .policy-body p { margin-bottom: 12px; }
+    .policy-body p:last-child { margin-bottom: 0; }
+    .policy-body ul { list-style: none; padding-left: 0; margin: 10px 0; display: flex; flex-direction: column; gap: 7px; }
+    .policy-body ul li { padding-left: 20px; position: relative; }
+    .policy-body ul li::before { content: '·'; position: absolute; left: 6px; color: var(--vivid-blue); font-weight: 900; font-size: 1.2rem; top: -1px; }
+
+    /* Contact card */
+    .contact-card {
+      padding: 28px 32px; border-radius: var(--radius-card);
+      background: rgba(209,196,233,0.35);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.90), 0 8px 28px rgba(108,92,231,0.10);
+      outline: 1.5px solid rgba(255,255,255,0.75); outline-offset: -1.5px;
+      margin-top: 32px; text-align: center;
+    }
+    .contact-card h2 { font-size: 1.2rem; font-weight: 900; color: var(--slate-900); margin-bottom: 10px; }
+    .contact-card p { font-size: 0.95rem; font-weight: 600; color: var(--slate-700); margin-bottom: 18px; line-height: 1.6; }
+    .btn-contact {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: var(--radius-pill);
+      background: var(--violet); color: #fff; font-weight: 800; font-size: 0.95rem;
+      text-decoration: none; box-shadow: 0 6px 20px rgba(108,92,231,0.30);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .btn-contact:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(108,92,231,0.38); }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 28px 24px 40px;
+    }
+    .footer-links {
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 10px;
+    }
+    .footer-links a {
+      padding: 6px 14px; border-radius: var(--radius-pill);
+      font-weight: 700; font-size: 0.88rem; color: var(--slate-700);
+      text-decoration: none; background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(12px); transition: background 0.18s;
+    }
+    .footer-links a:hover { background: rgba(255,255,255,0.80); }
+    .footer-copy { font-size: 0.82rem; font-weight: 600; color: var(--slate-500); }
+
+    @media (max-width: 640px) {
+      .navbar { top: 10px; margin: 10px 16px 0; }
+      .policy-card, .tldr-card, .contact-card { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wallpaper" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="Page navigation">
+    <a href="/" class="nav-logo" aria-label="Akshar home">Akshar</a>
+    <a href="/" class="btn-back" aria-label="Back to home">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <main class="content" id="main-content">
+
+    <!-- Header -->
+    <div class="page-eyebrow" aria-label="Document type">🔒 Legal Document</div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-subtitle">
+      Your child's privacy matters deeply to us. Here's everything you need to know —
+      written in plain language.
+    </p>
+    <div class="last-updated">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      Last updated: October 2025
+    </div>
+
+    <!-- TL;DR -->
+    <div class="tldr-card" role="region" aria-label="Summary">
+      <h2 class="tldr-title">
+        <span aria-hidden="true">🌿</span> The short version
+      </h2>
+      <ul class="tldr-list" role="list">
+        <li>We collect <strong>no personal data</strong> from children or adults.</li>
+        <li>Akshar works <strong>100% offline</strong> — no accounts, no sign-ins.</li>
+        <li>We prioritize <strong>child safety &amp; privacy</strong> above all else.</li>
+        <li>We do <strong>not share</strong> any data with third parties.</li>
+        <li>The app does <strong>not require</strong> internet access after download.</li>
+      </ul>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="policy-card" role="region" aria-labelledby="s1">
+      <div class="policy-section-num" aria-hidden="true">1</div>
+      <h2 class="policy-section-title" id="s1">About Akshar</h2>
+      <div class="policy-body">
+        <p>
+          Akshar is an educational Augmented Reality (AR) app designed for children
+          aged 2–8 years. It uses your device's camera to place interactive 3D models of
+          letters, shapes, animals, fruits, vegetables, and vehicles in the real world,
+          accompanied by toddler-friendly phonics narration.
+        </p>
+        <p>
+          Akshar is developed as an independent project. This Privacy Policy applies to
+          the Akshar mobile application available on the Apple App Store and Google Play Store,
+          and to the website at <strong>aksh.ar</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="policy-card" role="region" aria-labelledby="s2">
+      <div class="policy-section-num" aria-hidden="true">2</div>
+      <h2 class="policy-section-title" id="s2">Information We Collect</h2>
+      <div class="policy-body">
+        <p><strong>We collect no personal information whatsoever.</strong> Specifically:</p>
+        <ul>
+          <li>We do not collect names, email addresses, phone numbers, or any contact information.</li>
+          <li>We do not collect device identifiers, advertising IDs, or fingerprints.</li>
+          <li>We do not collect location data, GPS coordinates, or IP addresses.</li>
+          <li>We do not collect camera images or video recordings. Camera access is used solely
+              to render the AR scene in real time on your device — no frames are ever transmitted
+              or stored outside the app.</li>
+          <li>We do not use analytics SDKs, crash-reporting libraries, or any third-party data collection tools.</li>
+        </ul>
+        <p>
+          All app data (lesson progress, imported 3D models) is stored locally on your
+          device using an encrypted on-device database and is never transmitted to any server.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="policy-card" role="region" aria-labelledby="s3">
+      <div class="policy-section-num" aria-hidden="true">3</div>
+      <h2 class="policy-section-title" id="s3">Camera & Microphone Access</h2>
+      <div class="policy-body">
+        <p>
+          Akshar requests access to your device's <strong>camera</strong> solely to power
+          the Augmented Reality experience. Camera frames are processed entirely on your
+          device using ARCore (Android) or ARKit (iOS). No camera data leaves your device.
+        </p>
+        <p>
+          Akshar does <strong>not</strong> request microphone access. The app uses your
+          device's built-in text-to-speech engine for phonics narration — no audio is
+          recorded or transmitted.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="policy-card" role="region" aria-labelledby="s4">
+      <div class="policy-section-num" aria-hidden="true">4</div>
+      <h2 class="policy-section-title" id="s4">Children's Privacy (COPPA &amp; GDPR-K)</h2>
+      <div class="policy-body">
+        <p>
+          Akshar is designed for use by young children and complies with the
+          <strong>Children's Online Privacy Protection Act (COPPA)</strong> and the
+          <strong>UK &amp; EU GDPR</strong> provisions for children's data.
+        </p>
+        <p>
+          Because we collect no personal data at all, there is no parental consent requirement —
+          but we encourage parents and teachers to be involved in their child's use of the app.
+        </p>
+        <p>
+          Akshar is listed in the "Kids" category on both the Apple App Store and Google Play Store.
+          It meets their respective requirements for children's apps, including the prohibition
+          on behavioural advertising and third-party analytics.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="policy-card" role="region" aria-labelledby="s5">
+      <div class="policy-section-num" aria-hidden="true">5</div>
+      <h2 class="policy-section-title" id="s5">Third-Party Services</h2>
+      <div class="policy-body">
+        <p>Akshar uses the following platform-provided services — all of which operate under the respective platform's own privacy policies:</p>
+        <ul>
+          <li><strong>ARCore</strong> (Google, Android only) — for AR surface detection. Subject to Google's Privacy Policy.</li>
+          <li><strong>ARKit</strong> (Apple, iOS only) — for AR surface detection. Subject to Apple's Privacy Policy.</li>
+          <li><strong>Flutter Text-to-Speech</strong> — uses the operating system's built-in TTS engine. No data is sent to external TTS servers.</li>
+        </ul>
+        <p>
+          We do not integrate any advertising networks, social media SDKs, payment processors,
+          or analytics platforms.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="policy-card" role="region" aria-labelledby="s6">
+      <div class="policy-section-num" aria-hidden="true">6</div>
+      <h2 class="policy-section-title" id="s6">This Website (aksh.ar)</h2>
+      <div class="policy-body">
+        <p>
+          The Akshar website is hosted on <strong>GitHub Pages</strong> and uses no cookies,
+          tracking pixels, or analytics scripts. We do not serve ads and do not collect
+          visitor information.
+        </p>
+        <p>
+          GitHub Pages may collect standard server logs (IP address, browser type, referring page)
+          as part of its hosting infrastructure. This is governed by
+          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" rel="noopener noreferrer" target="_blank" style="color: var(--vivid-blue); font-weight: 700;">GitHub's Privacy Statement</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 7 -->
+    <div class="policy-card" role="region" aria-labelledby="s7">
+      <div class="policy-section-num" aria-hidden="true">7</div>
+      <h2 class="policy-section-title" id="s7">Data Deletion</h2>
+      <div class="policy-body">
+        <p>
+          Since we store no data on our servers, there is nothing for us to delete on
+          your behalf. All app data lives exclusively on your device.
+        </p>
+        <p>
+          To remove all app data, simply <strong>uninstall Akshar</strong> from your device.
+          This permanently removes all locally stored lessons, imported models, and preferences.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 8 -->
+    <div class="policy-card" role="region" aria-labelledby="s8">
+      <div class="policy-section-num" aria-hidden="true">8</div>
+      <h2 class="policy-section-title" id="s8">Changes to This Policy</h2>
+      <div class="policy-body">
+        <p>
+          We may update this Privacy Policy from time to time. When we do, we will revise
+          the "Last updated" date at the top of this page. We encourage you to review this
+          page periodically.
+        </p>
+        <p>
+          Continued use of the app after changes are posted constitutes acceptance of the
+          updated policy. If you have concerns about any changes, please contact us.
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-card" role="region" aria-label="Contact information">
+      <h2>Questions? We'd love to hear from you.</h2>
+      <p>
+        If you have any questions about this Privacy Policy or how Akshar handles data,
+        please reach out — we're happy to explain anything in more detail.
+      </p>
+      <a href="mailto:hello@aksh.ar" class="btn-contact" aria-label="Email Akshar support">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        hello@aksh.ar
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="/">Home</a>
+      <a href="privacy-policy.html" aria-current="page">Privacy Policy</a>
+      <a href="mailto:hello@aksh.ar">Contact</a>
+    </nav>
+    <p class="footer-copy">© 2025 Akshar. Made with ❤️ for curious little minds.</p>
+  </footer>
+
+</div><!-- /page -->
+</body>
+</html>

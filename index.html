@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akshar — Learn Letters. See Magic.</title>
+  <meta name="description" content="Akshar is an interactive AR learning app for young children. Point your camera and watch letters, shapes, and animals come to life in Augmented Reality." />
+  <meta property="og:title" content="Akshar — Learn Letters. See Magic." />
+  <meta property="og:description" content="The AR learning adventure built for little minds." />
+  <meta property="og:url" content="https://aksh.ar" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="canonical" href="https://aksh.ar" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens (mirroring the Flutter Candy Glass palette) ─────────── */
+    :root {
+      --pink:       #FFB4D6;
+      --aqua:       #80D8FF;
+      --yellow:     #FFF176;
+      --lilac:      #D1C4E9;
+      --mint:       #A7F3D0;
+      --vivid-pink: #D81B60;
+      --vivid-blue: #0277BD;
+      --violet:     #6C5CE7;
+      --slate-900:  #0F172A;
+      --slate-700:  #334155;
+      --slate-500:  #64748B;
+      --slate-300:  #CBD5E1;
+      --white:      #FFFFFF;
+      --glass-fill: rgba(255,255,255,0.55);
+      --glass-border: rgba(255,255,255,0.80);
+      --glass-shadow: rgba(0,0,0,0.08);
+      --blur:       20px;
+      --radius-card: 28px;
+      --radius-pill: 50px;
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--slate-900);
+      background: #f0f0f8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Candy Glass Wallpaper Background ───────────────────────────────────── */
+    .wallpaper {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      /* Milky-white acrylic wash */
+      background:
+        radial-gradient(ellipse 80% 70% at 5% 10%,   rgba(255,180,214,0.38) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 65% at 95% 8%,   rgba(128,216,255,0.30) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 82% 48%,  rgba(255,241,118,0.26) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 75% at 8%  88%,  rgba(209,196,233,0.34) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 65% at 92% 92%,  rgba(167,243,208,0.28) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.48) 50%, rgba(255,255,255,0.58) 100%);
+      background-color: #fafafe;
+    }
+    /* Specular top-edge glare (mirrors _PlayfulMeshPainter) */
+    .wallpaper::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.45) 70%,
+        rgba(255,255,255,0.05) 100%);
+    }
+
+    /* ─── Page wrapper ───────────────────────────────────────────────────────── */
+    .page { position: relative; z-index: 1; }
+
+    /* ─── Glassmorphism helper mixin (via class) ─────────────────────────────── */
+    .glass {
+      background: var(--glass-fill);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      /* Specular gradient border (mirrors CandyGlassContainer) */
+      border: 1.5px solid transparent;
+      background-clip: padding-box;
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.85),   /* top specular glare */
+        inset 0 -1px 0 rgba(255,255,255,0.25),
+        0 8px 32px var(--glass-shadow);
+      outline: 1.5px solid rgba(255,255,255,0.60);
+      outline-offset: -1.5px;
+    }
+
+    /* ─── Navbar (inside left triptych panel) ───────────────────────────────── */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px 0 20px;
+      height: 56px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.95),
+        0 4px 24px rgba(0,0,0,0.09);
+      outline: 1.5px solid rgba(255,255,255,0.75);
+      outline-offset: -1.5px;
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--vivid-blue);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 7px 12px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--slate-700);
+      text-decoration: none;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.6); color: var(--slate-900); }
+    .btn-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--vivid-pink);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(216,27,96,0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(216,27,96,0.45); }
+    @media (max-width: 900px) { .nav-links { display: none; } }
+
+    /* ─── Triptych Hero ──────────────────────────────────────────────────────── */
+    .hero-triptych {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 36px 64px;
+    }
+    /* Subtle vertical dividers between columns */
+    .panel:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 6%; bottom: 6%;
+      right: 0;
+      width: 1px;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(255,255,255,0.65) 15%,
+        rgba(255,255,255,0.65) 85%,
+        transparent 100%);
+    }
+
+    /* ── Panel Left: Brand, Navigation, Tagline, CTAs ── */
+    .panel-left {
+      justify-content: flex-start;
+      padding-top: 16px;
+    }
+    .panel-left .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      padding: 36px 0 24px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 12px rgba(0,0,0,0.07);
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: var(--vivid-pink);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      align-self: flex-start;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-wordmark-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .hero-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      color: var(--slate-900);
+      letter-spacing: -2.5px;
+      line-height: 1;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-wordmark-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0; right: 0;
+      height: 5px;
+      border-radius: 3px;
+      background: linear-gradient(90deg,
+        #EF4444 0%, #F97316 17%, #EAB308 33%,
+        #22C55E 50%, #3B82F6 67%, #8B5CF6 83%, #EC4899 100%);
+    }
+    .hero-tagline {
+      font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+      font-weight: 900;
+      color: var(--slate-900);
+      letter-spacing: -0.3px;
+      margin-top: 24px;
+      line-height: 1.25;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-subtagline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--slate-500);
+      line-height: 1.6;
+      margin-top: 12px;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .btn-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 20px;
+      border-radius: var(--radius-card);
+      font-weight: 800;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-store:hover { transform: translateY(-3px); }
+    .btn-apple {
+      background: rgba(2,119,189,0.10);
+      color: var(--vivid-blue);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 6px 20px rgba(2,119,189,0.18);
+      outline: 1.5px solid rgba(255,255,255,0.70);
+    }
+    .btn-apple:hover { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 12px 30px rgba(2,119,189,0.28); }
+    .btn-google {
+      background: rgba(15,157,88,0.10);
+      color: #0D7F46;
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 6px 20px rgba(15,157,88,0.16);
+      outline: 1.5px solid rgba(255,255,255,0.70);
+    }
+    .btn-google:hover { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 12px 30px rgba(15,157,88,0.26); }
+    .btn-store svg { flex-shrink: 0; }
+
+    /* ── Panel Center: Pure AR Viewfinder (no repeated titles) ── */
+    .panel-centre {
+      align-items: center;
+      justify-content: center;
+    }
+    .ar-showcase-card {
+      width: min(300px, 86%);
+      aspect-ratio: 9/16;
+      border-radius: 36px;
+      background: linear-gradient(165deg, rgba(255,255,255,0.72) 0%, rgba(255,235,245,0.55) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.98),
+        inset 0 -1.5px 0 rgba(255,255,255,0.35),
+        0 28px 72px rgba(255,42,133,0.32),
+        0 8px 24px rgba(0,0,0,0.08);
+      outline: 2px solid rgba(255,255,255,0.88);
+      outline-offset: -2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+    .ar-showcase-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
+      background: linear-gradient(135deg,
+        rgba(255,255,255,0.40) 0%,
+        rgba(255,255,255,0.12) 45%,
+        transparent 80%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .ar-quest-pill {
+      position: absolute;
+      top: 24px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.40);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255,255,255,0.90);
+      box-shadow: 0 4px 14px rgba(255,42,133,0.22);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: #D81B60;
+      text-transform: uppercase;
+      z-index: 3;
+    }
+    .ar-grid {
+      position: absolute;
+      bottom: 50px; left: 0; right: 0; height: 86px;
+      background:
+        repeating-linear-gradient(90deg, rgba(99,102,241,0.18) 0px, transparent 1px, transparent 26px),
+        repeating-linear-gradient(0deg,  rgba(99,102,241,0.18) 0px, transparent 1px, transparent 26px);
+      opacity: 0.85;
+    }
+    .ar-letter {
+      font-size: clamp(5.5rem, 11vw, 8.5rem);
+      line-height: 1;
+      filter:
+        drop-shadow(0 10px 32px rgba(255,42,133,0.42))
+        drop-shadow(0 2px 10px rgba(112,98,232,0.30));
+      animation: letterFloat 4s ease-in-out infinite;
+      z-index: 1;
+    }
+    .ar-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--slate-500);
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      z-index: 3;
+    }
+
+    /* ── Panel Right: App Screens Fan (no repeated titles) ── */
+    .panel-right {
+      align-items: center;
+      justify-content: center;
+    }
+    .screens-fan {
+      position: relative;
+      width: min(320px, 90%);
+      height: 420px;
+      animation: fadeUp 0.7s 0.25s ease both;
+    }
+    .screen-card {
+      position: absolute;
+      border-radius: 26px;
+      outline: 2px solid rgba(255,255,255,0.85);
+      outline-offset: -2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,0.90);
+    }
+    /* Left: Strawberry Pink Alphabet 26 card */
+    .screen-card.sc-left {
+      width: 52%; aspect-ratio: 9/16;
+      left: 0; top: 26px;
+      transform: rotate(-6deg) translateX(-8px);
+      transform-origin: bottom center;
+      background: linear-gradient(145deg, #FF628D 0%, #FF5277 100%);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.90),
+        0 18px 42px rgba(255,82,119,0.42);
+      z-index: 1;
+      padding: 16px 12px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    /* Centre: Elevated Live Phone Viewfinder */
+    .screen-card.sc-centre {
+      width: 58%; aspect-ratio: 9/16;
+      left: 50%; top: 0;
+      transform: translateX(-50%);
+      background: linear-gradient(175deg, #FFFFFF 0%, #FFF0F5 100%);
+      backdrop-filter: blur(24px);
+      z-index: 3;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,1.0),
+        0 28px 64px rgba(255,42,133,0.30),
+        0 8px 24px rgba(0,0,0,0.12);
+      outline: 2px solid rgba(255,255,255,0.92);
+      outline-offset: -2px;
+    }
+    /* Right: Fresh Meadow Green Animals 10 card */
+    .screen-card.sc-right {
+      width: 52%; aspect-ratio: 9/16;
+      right: 0; top: 26px;
+      transform: rotate(6deg) translateX(8px);
+      transform-origin: bottom center;
+      background: linear-gradient(145deg, #48CF82 0%, #38C172 100%);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.90),
+        0 18px 42px rgba(56,193,114,0.42);
+      z-index: 1;
+      padding: 16px 12px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    .sc-icon-plate {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.28);
+      border: 1.5px solid rgba(255,255,255,0.85);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+    .sc-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .sc-count {
+      font-size: 0.85rem;
+      font-weight: 800;
+      opacity: 0.92;
+      margin-top: 2px;
+    }
+    .centre-phone-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 10px 14px;
+    }
+    .centre-status-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.60rem;
+      font-weight: 800;
+      color: var(--slate-700);
+      margin-bottom: 6px;
+    }
+    .centre-quest-card {
+      flex: 1;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #FF2A85 0%, #FF5E7E 100%);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.90), 0 8px 24px rgba(255,42,133,0.35);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .centre-quest-tag {
+      align-self: flex-start;
+      font-size: 0.52rem;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.85);
+      text-transform: uppercase;
+    }
+    .centre-quest-center {
+      text-align: center;
+      margin: 4px 0;
+    }
+    .centre-quest-letter {
+      font-size: 2.4rem;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.20));
+    }
+    .centre-quest-title {
+      font-size: 0.72rem;
+      font-weight: 900;
+      margin-top: 4px;
+      letter-spacing: -0.2px;
+    }
+    .centre-start-btn {
+      background: #FFFFFF;
+      color: var(--slate-900);
+      border-radius: 14px;
+      padding: 5px 10px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+    .screens-store-badges {
+      position: absolute;
+      bottom: -48px;
+      left: 0; right: 0;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 15px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.90), 0 3px 10px rgba(0,0,0,0.07);
+      text-decoration: none;
+      color: var(--slate-700);
+      transition: transform 0.18s;
+    }
+    .badge-pill:hover { transform: translateY(-2px); }
+
+    /* Mobile: stack triptych panels */
+    @media (max-width: 900px) {
+      .hero-triptych { grid-template-columns: 1fr; min-height: auto; }
+      .panel { padding: 40px 24px; }
+      .panel-left { padding-top: 16px; }
+      .panel:not(:last-child)::after {
+        top: auto; bottom: 0; left: 8%; right: 8%;
+        width: auto; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      }
+      .screens-fan { height: 350px; }
+    }
+
+    /* ─── Section wrapper ────────────────────────────────────────────────────── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--vivid-pink);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: var(--slate-900);
+      letter-spacing: -0.5px;
+      margin-bottom: 40px;
+    }
+
+    /* ─── Feature Cards ──────────────────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      padding: 32px 28px;
+      border-radius: var(--radius-card);
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.85),
+        0 8px 32px var(--glass-shadow);
+      outline: 1.5px solid rgba(255,255,255,0.72);
+      outline-offset: -1.5px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.22s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+    }
+    .feature-card.pink  { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 12px 40px rgba(216,27,96,0.14); }
+    .feature-card.violet{ box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 12px 40px rgba(108,92,231,0.14); }
+    .feature-card.teal  { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 12px 40px rgba(2,119,189,0.14); }
+    .feature-card.pink:hover  { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 20px 52px rgba(216,27,96,0.22); }
+    .feature-card.violet:hover{ box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 20px 52px rgba(108,92,231,0.22); }
+    .feature-card.teal:hover  { box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 20px 52px rgba(2,119,189,0.22); }
+    .feature-icon {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+    .feature-desc {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--slate-500);
+      line-height: 1.65;
+    }
+
+    /* ─── Curriculum Strip ───────────────────────────────────────────────────── */
+    .curriculum-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .curriculum-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--slate-900);
+      background: rgba(255,255,255,0.60);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.90),
+        0 4px 18px rgba(0,0,0,0.07);
+      outline: 1.5px solid rgba(255,255,255,0.75);
+      outline-offset: -1.5px;
+      cursor: default;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .curriculum-pill:hover { transform: translateY(-3px); box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.90), 0 10px 28px rgba(0,0,0,0.10); }
+    .curriculum-pill .pill-emoji { font-size: 1.3rem; }
+    .pill-a   { background: rgba(255,180,214,0.35); }
+    .pill-s   { background: rgba(209,196,233,0.40); }
+    .pill-an  { background: rgba(167,243,208,0.38); }
+    .pill-f   { background: rgba(255,241,118,0.38); }
+    .pill-v   { background: rgba(128,216,255,0.35); }
+
+    /* ─── How it Works / Steps ───────────────────────────────────────────────── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .step-card {
+      padding: 28px 24px;
+      border-radius: var(--radius-card);
+      background: rgba(255,255,255,0.50);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.85), 0 6px 24px rgba(0,0,0,0.07);
+      outline: 1.5px solid rgba(255,255,255,0.68);
+      outline-offset: -1.5px;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .step-card.visible {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .step-n1 { background: var(--vivid-pink); box-shadow: 0 4px 14px rgba(216,27,96,0.35); }
+    .step-n2 { background: var(--violet);     box-shadow: 0 4px 14px rgba(108,92,231,0.35); }
+    .step-n3 { background: var(--vivid-blue); box-shadow: 0 4px 14px rgba(2,119,189,0.35); }
+    .step-n4 { background: #0D7F46;           box-shadow: 0 4px 14px rgba(15,157,88,0.35); }
+    .step-title { font-size: 1.1rem; font-weight: 900; color: var(--slate-900); margin-bottom: 8px; }
+    .step-desc  { font-size: 0.92rem; font-weight: 600; color: var(--slate-500); line-height: 1.6; }
+
+    /* ─── Mission section ────────────────────────────────────────────────────── */
+    .mission-card {
+      padding: 48px 44px;
+      border-radius: 36px;
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.90),
+        0 12px 48px rgba(108,92,231,0.10);
+      outline: 1.5px solid rgba(255,255,255,0.78);
+      outline-offset: -1.5px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .mission-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .mission-emoji { font-size: 3.5rem; margin-bottom: 20px; display: block; }
+    .mission-text {
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      font-weight: 700;
+      color: var(--slate-700);
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) { .mission-card { padding: 32px 22px; } }
+
+    /* ─── Footer ─────────────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px 48px;
+    }
+    .footer-inner {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--vivid-blue);
+      text-decoration: none;
+    }
+    .footer-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--slate-700);
+      text-decoration: none;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(12px);
+      transition: background 0.18s;
+    }
+    .footer-links a:hover { background: rgba(255,255,255,0.80); }
+    .footer-copy {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--slate-500);
+    }
+
+    /* ─── Animations ─────────────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    @keyframes letterFloat {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50%      { transform: translateY(-10px) rotate(1.5deg); }
+    }
+
+    /* ─── Divider ────────────────────────────────────────────────────────────── */
+    .section-divider {
+      width: 60px; height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--vivid-pink), var(--violet));
+      margin: 0 auto 40px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Candy Glass Wallpaper (mimics PlayfulWallpaperBackground) -->
+<div class="wallpaper" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- ── Triptych Hero (3-panel unified design) ──────────────────────────── -->
+  <section class="hero-triptych" aria-label="Akshar Overview">
+
+    <!-- Panel 1: Left — Brand Identity, Navigation, and Core CTA -->
+    <div class="panel panel-left">
+      <!-- Integrated Frosted Navbar inside left panel -->
+      <nav class="navbar" aria-label="Main navigation">
+        <a href="/" class="nav-logo" aria-label="Akshar home">Akshar</a>
+        <ul class="nav-links" role="list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="privacy-policy.html">Privacy</a></li>
+        </ul>
+        <a href="#download" class="btn-nav-cta" aria-label="Download Akshar app">
+          ✨ Download
+        </a>
+      </nav>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow" aria-label="Category">
+          ✨ Interactive AR Learning for Kids
+        </div>
+
+        <div class="hero-wordmark-wrap">
+          <h1 class="hero-wordmark" id="hero-heading">Akshar</h1>
+        </div>
+
+        <p class="hero-tagline">Learn Letters. See Magic.</p>
+        <p class="hero-subtagline">
+          Point your camera and watch letters, animals, and shapes leap off the page into your world — powered by Augmented Reality.
+        </p>
+
+        <div class="hero-ctas" id="download">
+          <a href="#" class="btn-store btn-apple" aria-label="Download on the App Store">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            App Store
+          </a>
+          <a href="#" class="btn-store btn-google" aria-label="Get it on Google Play">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 20.5v-17c0-.83 1-.83 1.27-.16l14.24 8.5c.27.16.27.66 0 .82L4.27 20.66C4 21.33 3 21.33 3 20.5z"/>
+            </svg>
+            Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Center — Pure AR Viewfinder (no repeated title) -->
+    <div class="panel panel-centre">
+      <div class="ar-showcase-card" aria-label="Augmented reality interactive preview">
+        <div class="ar-quest-pill" aria-hidden="true">Today's Quest</div>
+        <div class="ar-letter" aria-hidden="true">✨A</div>
+        <div class="ar-grid" aria-hidden="true"></div>
+        <div class="ar-hint">Surface Detected · Tap to Place</div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Right — Fanned Product Experience (no repeated title) -->
+    <div class="panel panel-right">
+      <div class="screens-fan" aria-label="App preview screens">
+        <!-- Left screen: Strawberry Pink Alphabet Card -->
+        <div class="screen-card sc-left" aria-hidden="true">
+          <div class="sc-icon-plate">🔤</div>
+          <div class="sc-title">Alphabet</div>
+          <div class="sc-count">3D AR</div>
+        </div>
+
+        <!-- Center elevated screen: Live AR Phone UI with Today's Quest -->
+        <div class="screen-card sc-centre" aria-hidden="true">
+          <div class="centre-phone-screen">
+            <div class="centre-status-bar">
+              <span>9:41</span>
+              <span>📶 🔋</span>
+            </div>
+            <div class="centre-quest-card">
+              <div class="centre-quest-tag">Today's Quest</div>
+              <div class="centre-quest-center">
+                <div class="centre-quest-letter">✨A</div>
+                <div class="centre-quest-title">Alphabet Adventure</div>
+              </div>
+              <div class="centre-start-btn">Start Quest</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right screen: Meadow Green Animals Card -->
+        <div class="screen-card sc-right" aria-hidden="true">
+          <div class="sc-icon-plate">🦁</div>
+          <div class="sc-title">Animals</div>
+          <div class="sc-count">3D AR</div>
+        </div>
+
+        <!-- Store badges indicator -->
+        <div class="screens-store-badges">
+          <span class="badge-pill">🍏 App Store</span>
+          <span class="badge-pill">▶ Google Play</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Features ────────────────────────────────────────────────────────── -->
+  <section class="section" id="features" aria-labelledby="features-heading">
+    <p class="section-label">What makes Akshar special</p>
+    <h2 class="section-title" id="features-heading">Magic in every lesson</h2>
+    <div class="features-grid">
+      <div class="feature-card pink observe">
+        <span class="feature-icon" aria-hidden="true">📷</span>
+        <h3 class="feature-title">Augmented Reality</h3>
+        <p class="feature-desc">
+          Place colourful 3D models right on your kitchen table.
+          Watch the letter A rise from the floor, or a lion roar on your desk —
+          AR makes learning impossible to forget.
+        </p>
+      </div>
+      <div class="feature-card violet observe">
+        <span class="feature-icon" aria-hidden="true">🔤</span>
+        <h3 class="feature-title">A–Z & Beyond</h3>
+        <p class="feature-desc">
+          A rich, expanding library of hand-crafted 3D models spanning the alphabet,
+          shapes, animals, fruits &amp; vegetables, and vehicles. New worlds added regularly.
+        </p>
+      </div>
+      <div class="feature-card teal observe">
+        <span class="feature-icon" aria-hidden="true">🔊</span>
+        <h3 class="feature-title">Phonics Audio</h3>
+        <p class="feature-desc">
+          Toddler-tuned narration at the perfect pace — warm, cheerful voices
+          that connect real-world associations to every letter and object.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Curriculum Strip ─────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0;" aria-label="Curriculum categories">
+    <p class="section-label" style="text-align:center;">Explore curated worlds</p>
+    <h2 class="section-title" style="text-align:center; margin-bottom:28px;">What kids will discover</h2>
+    <div class="curriculum-strip" role="list">
+      <span class="curriculum-pill pill-a" role="listitem"><span class="pill-emoji" aria-hidden="true">🔤</span> Alphabet</span>
+      <span class="curriculum-pill pill-s" role="listitem"><span class="pill-emoji" aria-hidden="true">🔷</span> Shapes</span>
+      <span class="curriculum-pill pill-an" role="listitem"><span class="pill-emoji" aria-hidden="true">🦁</span> Animals</span>
+      <span class="curriculum-pill pill-f"  role="listitem"><span class="pill-emoji" aria-hidden="true">🍎</span> Fruits &amp; Veg</span>
+      <span class="curriculum-pill pill-v"  role="listitem"><span class="pill-emoji" aria-hidden="true">🚗</span> Vehicles</span>
+    </div>
+  </section>
+
+  <!-- ── How It Works ─────────────────────────────────────────────────────── -->
+  <section class="section" id="how-it-works" aria-labelledby="how-heading">
+    <p class="section-label">Simple for any age</p>
+    <h2 class="section-title" id="how-heading">Up and running in seconds</h2>
+    <div class="steps-grid">
+      <div class="step-card observe">
+        <div class="step-number step-n1">1</div>
+        <h3 class="step-title">Pick a Lesson</h3>
+        <p class="step-desc">Choose from curated curriculum worlds — Alphabet, Animals, Shapes, and more.</p>
+      </div>
+      <div class="step-card observe">
+        <div class="step-number step-n2">2</div>
+        <h3 class="step-title">Point Your Camera</h3>
+        <p class="step-desc">Scan a flat surface — a table, a book, the floor — and watch the AR grid appear.</p>
+      </div>
+      <div class="step-card observe">
+        <div class="step-number step-n3">3</div>
+        <h3 class="step-title">3D Models Come Alive</h3>
+        <p class="step-desc">Tap to place vibrant 3D models exactly where you want them in the real world.</p>
+      </div>
+      <div class="step-card observe">
+        <div class="step-number step-n4">4</div>
+        <h3 class="step-title">Hear &amp; Learn</h3>
+        <p class="step-desc">Cheerful phonics narration plays automatically — connecting sound, sight, and memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Mission ──────────────────────────────────────────────────────────── -->
+  <section class="section" id="about" aria-labelledby="mission-heading" style="padding-top: 0;">
+    <p class="section-label" style="text-align:center;">Our mission</p>
+    <div class="section-divider" aria-hidden="true"></div>
+    <div class="mission-card observe" aria-labelledby="mission-heading">
+      <span class="mission-emoji" aria-hidden="true">🌟</span>
+      <h2 id="mission-heading" style="font-size:1.5rem;font-weight:900;margin-bottom:16px;letter-spacing:-0.3px;">
+        Built for little minds, loved by families
+      </h2>
+      <p class="mission-text">
+        We believe every child deserves magical learning moments. Akshar brings letters,
+        shapes, and creatures to life through Augmented Reality — right on your kitchen table.
+        Designed with love, curiosity, and wonder — making early learning magical, engaging, and unforgettable.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <a href="/" class="footer-logo" aria-label="Akshar home">Akshar</a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="mailto:hello@aksh.ar">Contact</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+      </nav>
+      <p class="footer-copy">© 2025 Akshar. Made with ❤️ for curious little minds.</p>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  // IntersectionObserver scroll-reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // Stagger cards within the same parent
+        const siblings = entry.target.parentElement.querySelectorAll('.observe');
+        const idx = Array.from(siblings).indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), idx * 90);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.observe').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
