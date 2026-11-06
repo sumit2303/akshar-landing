@@ -588,10 +588,10 @@
         grid-template-columns: 1fr;
         padding: 24px 20px 48px;
         min-height: auto;
-        gap: 32px;
+        gap: 28px;
       }
       .hero-panel-left {
-        padding: 10px 0 20px;
+        padding: 10px 0 16px;
         align-items: center;
         text-align: center;
       }
@@ -603,49 +603,131 @@
       }
       .hero-trust-row {
         justify-content: center;
+        gap: 8px;
+      }
+      .trust-badge {
+        padding: 6px 12px;
+        font-size: 0.72rem;
       }
       .hero-ctas {
         justify-content: center;
       }
       .hero-panel-right {
-        padding: 10px 0 40px;
+        padding: 10px 0 36px;
       }
     }
     @media (max-width: 640px) {
       .site-header {
-        top: 12px;
-        margin-top: 12px;
-        padding: 0 16px;
+        top: 10px;
+        margin-top: 10px;
+        padding: 0 12px;
       }
       .navbar {
-        height: 52px;
-        padding: 0 14px 0 18px;
+        height: 50px;
+        padding: 0 12px 0 16px;
+      }
+      .nav-logo {
+        font-size: 1.3rem;
       }
       .nav-links a {
-        padding: 6px 8px;
-        font-size: 0.78rem;
+        padding: 5px 8px;
+        font-size: 0.76rem;
       }
+      .hero-showcase-section {
+        padding: 16px 14px 36px;
+        gap: 24px;
+      }
+      .hero-panel-left {
+        padding: 6px 0 12px;
+      }
+      .hero-eyebrow {
+        font-size: 0.70rem;
+        padding: 5px 12px;
+        margin-bottom: 14px;
+      }
+      .hero-wordmark {
+        font-size: clamp(2.6rem, 10.5vw, 3.6rem);
+        letter-spacing: -1.2px;
+      }
+      .hero-tagline {
+        font-size: 1.25rem;
+        margin-top: 16px;
+      }
+      .hero-subtagline {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin-top: 8px;
+        padding: 0 4px;
+        max-width: 420px;
+      }
+
+      /* Fixed Mobile Trust Badges: Compact, Single-Row Fit */
+      .hero-trust-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .trust-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 9px;
+        font-size: 0.68rem;
+        font-weight: 800;
+        border-radius: var(--radius-pill);
+        white-space: nowrap;
+        letter-spacing: -0.2px;
+      }
+
+      .hero-ctas {
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .btn-store {
+        padding: 10px 16px;
+        font-size: 0.86rem;
+        gap: 7px;
+        border-radius: 20px;
+      }
+      .btn-store svg {
+        width: 17px;
+        height: 17px;
+      }
+
       .ar-showcase-stage {
-        max-width: 300px;
-        height: 480px;
+        max-width: 290px;
+        height: 460px;
       }
       .ar-device-frame {
-        width: 240px;
-        height: 480px;
+        width: 230px;
+        height: 460px;
         transform: none;
+        border-radius: 40px;
+        padding: 8px;
+      }
+      .device-screen {
+        border-radius: 32px;
+      }
+      .device-notch {
+        width: 68px;
+        height: 16px;
+        top: 14px;
       }
       .orbit-card {
         display: none;
       }
       .world-switcher {
-        margin-top: 18px;
-        gap: 5px;
+        margin-top: 14px;
+        gap: 4px;
         padding: 4px;
       }
       .world-pill {
-        padding: 6px 11px;
-        font-size: 0.76rem;
-        gap: 5px;
+        padding: 6px 10px;
+        font-size: 0.74rem;
+        gap: 4px;
       }
       .pill-emoji {
         font-size: 0.95rem;
