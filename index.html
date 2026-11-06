@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akshar — Learn Letters. See Magic.</title>
+  <title>AkshAR ✨ — Learn Letters. See Magic.</title>
   <meta name="description" content="Akshar is an interactive AR learning app for young children. Point your camera and watch letters, shapes, and animals come to life in Augmented Reality." />
-  <meta property="og:title" content="Akshar — Learn Letters. See Magic." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta property="og:title" content="AkshAR ✨ — Learn Letters. See Magic." />
   <meta property="og:description" content="The AR learning adventure built for little minds." />
+  <meta property="og:image" content="https://aksh.ar/logo.png" />
   <meta property="og:url" content="https://aksh.ar" />
   <meta name="theme-color" content="#ffffff" />
   <link rel="canonical" href="https://aksh.ar" />
@@ -101,7 +106,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 8px 0 20px;
+      padding: 0 16px 0 20px;
       height: 56px;
       border-radius: var(--radius-pill);
       background: rgba(255,255,255,0.72);
@@ -157,23 +162,10 @@
       white-space: nowrap;
     }
     .nav-links a:hover { background: rgba(255,255,255,0.6); color: var(--slate-900); }
-    .btn-nav-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 18px;
-      border-radius: var(--radius-pill);
-      background: var(--vivid-pink);
-      color: #fff;
-      font-weight: 800;
-      font-size: 0.85rem;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 4px 16px rgba(216,27,96,0.35);
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    @media (max-width: 540px) {
+      .navbar { padding: 0 10px 0 16px; }
+      .nav-links a { padding: 6px 8px; font-size: 0.78rem; }
     }
-    .btn-nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(216,27,96,0.45); }
-    @media (max-width: 900px) { .nav-links { display: none; } }
 
     /* ─── Triptych Hero ──────────────────────────────────────────────────────── */
     .hero-triptych {
@@ -890,9 +882,6 @@
           <li><a href="#about">About</a></li>
           <li><a href="privacy-policy.html">Privacy</a></li>
         </ul>
-        <a href="#download" class="btn-nav-cta" aria-label="Download AkshAR app">
-          ✨ Download
-        </a>
       </nav>
 
       <div class="hero-content">
