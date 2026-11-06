@@ -101,25 +101,31 @@
       outline-offset: -1.5px;
     }
 
-    /* ─── Navbar (inside left triptych panel) ───────────────────────────────── */
+    /* ─── Site Header & Navbar ──────────────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      width: 100%;
+      max-width: 1200px;
+      margin: 16px auto 0;
+      padding: 0 24px;
+    }
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px 0 20px;
-      height: 56px;
+      padding: 0 20px 0 24px;
+      height: 58px;
       border-radius: var(--radius-pill);
       background: rgba(255,255,255,0.72);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       box-shadow:
         inset 0 1.5px 0 rgba(255,255,255,0.95),
-        0 4px 24px rgba(0,0,0,0.09);
+        0 4px 24px rgba(0,0,0,0.08);
       outline: 1.5px solid rgba(255,255,255,0.75);
       outline-offset: -1.5px;
-      position: sticky;
-      top: 16px;
-      z-index: 100;
     }
     .nav-logo {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -147,14 +153,14 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
       list-style: none;
     }
     .nav-links a {
       display: block;
-      padding: 7px 12px;
+      padding: 7px 14px;
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--slate-700);
       text-decoration: none;
       border-radius: 20px;
@@ -162,37 +168,27 @@
       white-space: nowrap;
     }
     .nav-links a:hover { background: rgba(255,255,255,0.6); color: var(--slate-900); }
-    @media (max-width: 540px) {
-      .navbar { padding: 0 10px 0 16px; }
-      .nav-links a { padding: 6px 8px; font-size: 0.78rem; }
-    }
 
     /* ─── Hero Showcase Section ──────────────────────────────────────────────── */
     .hero-showcase-section {
       display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      min-height: 100vh;
-      max-width: 1400px;
+      grid-template-columns: 1.15fr 0.95fr;
+      min-height: calc(100vh - 100px);
+      max-width: 1200px;
       margin: 0 auto;
       position: relative;
-      padding: 0 40px;
+      padding: 36px 24px 64px;
       align-items: center;
-      gap: 40px;
+      gap: 48px;
     }
 
-    /* ── Hero Left: Brand, Navigation, Tagline, CTAs ── */
+    /* ── Hero Left: Brand Identity, Tagline, CTAs ── */
     .hero-panel-left {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      padding: 24px 0 48px;
-      z-index: 10;
-    }
-    .hero-panel-left .hero-content {
-      display: flex;
-      flex-direction: column;
       justify-content: center;
-      padding: 40px 0 24px;
+      padding: 20px 0 32px;
+      z-index: 10;
     }
     .hero-eyebrow {
       display: inline-flex;
@@ -248,7 +244,7 @@
       animation: fadeUp 0.7s 0.2s ease both;
     }
     .hero-subtagline {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: var(--slate-500);
       line-height: 1.6;
@@ -342,14 +338,14 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      padding: 30px 0;
+      padding: 20px 0;
       perspective: 1200px;
     }
     .ar-showcase-stage {
       position: relative;
       width: 100%;
-      max-width: 460px;
-      height: 600px;
+      max-width: 440px;
+      height: 580px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -383,7 +379,7 @@
       gap: 10px;
       padding: 9px 16px;
       border-radius: 20px;
-      background: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       box-shadow:
@@ -391,7 +387,8 @@
         0 14px 34px rgba(0,0,0,0.08);
       outline: 1.5px solid rgba(255,255,255,0.85);
       outline-offset: -1px;
-      z-index: 20;
+      z-index: 25;
+      white-space: nowrap;
       transition: transform 0.25s ease;
       animation: orbitFloat 5.5s ease-in-out infinite;
     }
@@ -420,18 +417,18 @@
       letter-spacing: -0.2px;
     }
     .oc-top-left {
-      top: 36px;
-      left: -20px;
+      top: 38px;
+      left: -48px;
       animation-delay: -0.8s;
     }
     .oc-top-right {
-      top: 72px;
-      right: -24px;
+      top: 68px;
+      right: -48px;
       animation-delay: -2.6s;
     }
     .oc-bottom-right {
-      bottom: 40px;
-      right: -16px;
+      bottom: 42px;
+      right: -36px;
       animation-delay: -4.2s;
     }
     @keyframes orbitFloat {
@@ -442,8 +439,8 @@
     /* Device Body Frame */
     .ar-device-frame {
       position: relative;
-      width: 290px;
-      height: 520px;
+      width: 280px;
+      height: 560px;
       border-radius: 46px;
       background: #0F172A;
       padding: 10px;
@@ -453,7 +450,7 @@
         0 14px 32px rgba(0,0,0,0.14);
       outline: 2px solid rgba(255,255,255,0.85);
       outline-offset: -1px;
-      transform: rotateY(-8deg) rotateX(4deg);
+      transform: rotateY(-6deg) rotateX(3deg);
       transform-style: preserve-3d;
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 2;
@@ -494,152 +491,28 @@
       width: 100%;
       height: 100%;
       border-radius: 36px;
-      background: linear-gradient(180deg,
-        #E0F2FE 0%,
-        #FCE7F3 45%,
-        #FEF3C7 80%,
-        #E2E8F0 100%);
-      position: relative;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: inset 0 0 24px rgba(0,0,0,0.06);
+      position: relative;
+      background: #0F172A;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.25);
     }
-    .device-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px 0;
-      font-size: 0.62rem;
-      font-weight: 800;
-      color: var(--slate-700);
-      z-index: 25;
-    }
-    .status-indicators {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .ar-hud-pill {
-      align-self: center;
-      margin-top: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 5px 12px;
-      border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      font-size: 0.65rem;
-      font-weight: 900;
-      color: #D81B60;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      z-index: 25;
-    }
-    .hud-pulse {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #22C55E;
-      box-shadow: 0 0 8px #22C55E;
-      animation: pulseDot 2s ease-in-out infinite;
-    }
-    @keyframes pulseDot {
-      0%, 100% { opacity: 0.5; transform: scale(0.9); }
-      50%      { opacity: 1.0; transform: scale(1.2); }
-    }
-    .ar-floor-perspective {
-      position: absolute;
-      bottom: 24px;
-      left: 0; right: 0;
-      height: 190px;
-      background:
-        linear-gradient(180deg, transparent 0%, rgba(216,27,96,0.05) 100%),
-        repeating-linear-gradient(90deg, rgba(99,102,241,0.16) 0px, transparent 1px, transparent 24px),
-        repeating-linear-gradient(0deg,  rgba(99,102,241,0.16) 0px, transparent 1px, transparent 24px);
-      transform: perspective(300px) rotateX(55deg);
-      transform-origin: bottom center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .ar-reticle-circle {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      border: 2px dashed #D81B60;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: reticlePulse 3s ease-in-out infinite;
-    }
-    .reticle-core {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #D81B60;
-      box-shadow: 0 0 12px #D81B60;
-    }
-    @keyframes reticlePulse {
-      0%, 100% { transform: scale(0.92); opacity: 0.6; }
-      50%      { transform: scale(1.06); opacity: 1.0; }
-    }
-    .ar-footer-prompt {
-      padding: 10px 14px 14px;
-      text-align: center;
-      font-size: 0.64rem;
-      font-weight: 800;
-      color: var(--slate-600);
-      letter-spacing: 0.4px;
-      z-index: 25;
-      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.7) 100%);
-    }
-
-    /* 3D Character Popping Out of Device */
-    .ar-character-pop {
-      position: absolute;
-      top: 55px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 320px;
-      pointer-events: none;
-      z-index: 10;
-      animation: characterFloat 4.5s ease-in-out infinite;
-    }
-    .character-img {
+    .device-screen-img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      filter:
-        drop-shadow(0 16px 30px rgba(0,0,0,0.18))
-        drop-shadow(0 4px 10px rgba(216,27,96,0.22));
-    }
-    .character-contact-shadow {
-      position: absolute;
-      bottom: -8px;
-      left: 24%; right: 24%;
-      height: 18px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center, rgba(15,23,42,0.36) 0%, transparent 72%);
-      filter: blur(4px);
-    }
-    @keyframes characterFloat {
-      0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
-      50%      { transform: translateX(-50%) translateY(-10px) rotate(1.2deg); }
     }
 
-    /* Responsive 2-Column Hero layout */
+    /* Responsive Layout */
     @media (max-width: 960px) {
       .hero-showcase-section {
         grid-template-columns: 1fr;
-        padding: 0 20px;
+        padding: 24px 20px 48px;
         min-height: auto;
-        gap: 16px;
+        gap: 32px;
       }
       .hero-panel-left {
-        padding: 20px 0 24px;
+        padding: 10px 0 20px;
         align-items: center;
         text-align: center;
       }
@@ -656,35 +529,34 @@
         justify-content: center;
       }
       .hero-panel-right {
-        padding: 20px 0 60px;
+        padding: 10px 0 40px;
+      }
+    }
+    @media (max-width: 640px) {
+      .site-header {
+        top: 12px;
+        margin-top: 12px;
+        padding: 0 16px;
+      }
+      .navbar {
+        height: 52px;
+        padding: 0 14px 0 18px;
+      }
+      .nav-links a {
+        padding: 6px 8px;
+        font-size: 0.78rem;
       }
       .ar-showcase-stage {
-        max-width: 330px;
-        height: 520px;
+        max-width: 300px;
+        height: 480px;
       }
       .ar-device-frame {
-        width: 270px;
+        width: 240px;
         height: 480px;
         transform: none;
       }
-      .ar-device-frame:hover {
-        transform: none;
-      }
-      .ar-character-pop {
-        width: 280px;
-        top: 45px;
-      }
-      .oc-top-left {
-        left: -12px;
-        top: 15px;
-      }
-      .oc-top-right {
-        right: -12px;
-        top: 60px;
-      }
-      .oc-bottom-right {
-        right: -8px;
-        bottom: 25px;
+      .orbit-card {
+        display: none;
       }
     }
 
@@ -942,61 +814,61 @@
 
 <div class="page">
 
+  <!-- ── Top Site Header & Navigation ─────────────────────────────────────── -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="/" class="nav-logo" aria-label="AkshAR home">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <!-- ── 2-Column Hero Showcase: Brand + Living 3D AR Device ──────────────── -->
   <section class="hero-showcase-section" aria-label="AkshAR Overview">
     
     <!-- Left: Brand Identity, Value Props, and Download CTAs -->
     <div class="hero-panel-left">
-      <!-- Frosted Navbar inside left panel -->
-      <nav class="navbar" aria-label="Main navigation">
-        <a href="/" class="nav-logo" aria-label="AkshAR home">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></a>
-        <ul class="nav-links" role="list">
-          <li><a href="#features">Features</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="privacy-policy.html">Privacy</a></li>
-        </ul>
-      </nav>
+      <div class="hero-eyebrow" aria-label="Category">
+        ✨ Interactive AR Early Learning for Kids
+      </div>
 
-      <div class="hero-content">
-        <div class="hero-eyebrow" aria-label="Category">
-          ✨ Interactive AR Early Learning for Kids
-        </div>
+      <div class="hero-wordmark-wrap">
+        <h1 class="hero-wordmark" id="hero-heading">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></h1>
+      </div>
 
-        <div class="hero-wordmark-wrap">
-          <h1 class="hero-wordmark" id="hero-heading">Aksh<span class="brand-ar">AR</span><span class="brand-sparkle"> ✨</span></h1>
-        </div>
+      <p class="hero-tagline">Learn Letters. See Magic.</p>
+      <p class="hero-subtagline">
+        Turn your tabletop into an interactive 3D discovery playground! Watch friendly animals, letters, and numbers leap into the real world with warm toddler phonics.
+      </p>
 
-        <p class="hero-tagline">Learn Letters. See Magic.</p>
-        <p class="hero-subtagline">
-          Turn your tabletop into an interactive 3D discovery playground! Watch friendly animals, letters, and numbers leap into the real world with warm toddler phonics.
-        </p>
+      <!-- Trust Badges -->
+      <div class="hero-trust-row" aria-label="Key features">
+        <span class="trust-badge">🛡️ 100% Ad-Free</span>
+        <span class="trust-badge">👶 COPPA Certified</span>
+        <span class="trust-badge">✈️ Offline Ready</span>
+      </div>
 
-        <!-- Trust Badges -->
-        <div class="hero-trust-row" aria-label="Key features">
-          <span class="trust-badge">🛡️ 100% Ad-Free</span>
-          <span class="trust-badge">👶 COPPA Certified</span>
-          <span class="trust-badge">✈️ Offline Ready</span>
-        </div>
-
-        <!-- Download CTAs -->
-        <div class="hero-ctas" id="download">
-          <a href="https://apps.apple.com/app/id6822104500" class="btn-store btn-apple" aria-label="Download on the App Store" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-            </svg>
-            App Store
-          </a>
-          <span class="btn-store btn-google is-coming-soon" aria-label="Google Play (Coming Soon)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 20.5v-17c0-.83 1-.83 1.27-.16l14.24 8.5c.27.16.27.66 0 .82L4.27 20.66C4 21.33 3 21.33 3 20.5z"/>
-            </svg>
-            Google Play <span class="tag-coming-soon">Coming Soon</span>
-          </span>
-        </div>
+      <!-- Download CTAs -->
+      <div class="hero-ctas" id="download">
+        <a href="https://apps.apple.com/app/id6822104500" class="btn-store btn-apple" aria-label="Download on the App Store" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          App Store
+        </a>
+        <span class="btn-store btn-google is-coming-soon" aria-label="Google Play (Coming Soon)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 20.5v-17c0-.83 1-.83 1.27-.16l14.24 8.5c.27.16.27.66 0 .82L4.27 20.66C4 21.33 3 21.33 3 20.5z"/>
+          </svg>
+          Google Play <span class="tag-coming-soon">Coming Soon</span>
+        </span>
       </div>
     </div>
 
-    <!-- Right: Unified Living AR Showcase Device (Popping Out Effect) -->
+    <!-- Right: Unified Living AR Showcase Device -->
     <div class="hero-panel-right">
       <div class="ar-showcase-stage" aria-label="Interactive Augmented Reality Device Preview">
         
@@ -1009,16 +881,16 @@
           <div class="oc-icon">🔊</div>
           <div class="oc-text">
             <span class="oc-label">Phonics Voice</span>
-            <span class="oc-title">"E is for Elephant!"</span>
+            <span class="oc-title">"D is for Dog!"</span>
           </div>
         </div>
 
-        <!-- Orbit Badge 2 (Top Right): Safari 3D -->
+        <!-- Orbit Badge 2 (Top Right): Living AR Toy -->
         <div class="orbit-card oc-top-right" aria-hidden="true">
-          <div class="oc-icon">🐘</div>
+          <div class="oc-icon">🐕</div>
           <div class="oc-text">
-            <span class="oc-label">Animals &amp; Safari</span>
-            <span class="oc-title">Tabletop Toy 3D</span>
+            <span class="oc-label">Living AR Toy</span>
+            <span class="oc-title">Tabletop 3D</span>
           </div>
         </div>
 
@@ -1039,41 +911,10 @@
             <div class="notch-sensor"></div>
           </div>
 
-          <!-- Glass Screen Viewport -->
+          <!-- Real Tabletop AR Experience Viewport -->
           <div class="device-screen">
-            <!-- Screen Status Bar -->
-            <div class="device-status-bar" aria-hidden="true">
-              <span>9:41</span>
-              <div class="status-indicators">
-                <span class="status-dot"></span>
-                <span>📶 🔋</span>
-              </div>
-            </div>
-
-            <!-- AR Viewfinder Overlay -->
-            <div class="ar-hud-pill" aria-hidden="true">
-              <span class="hud-pulse"></span>
-              Surface Detected · Tabletop AR
-            </div>
-
-            <!-- Floor Perspective Grid on which the toy sits -->
-            <div class="ar-floor-perspective" aria-hidden="true">
-              <div class="ar-reticle-circle">
-                <div class="reticle-core"></div>
-              </div>
-            </div>
-
-            <div class="ar-footer-prompt" aria-hidden="true">
-              <span>✨ Tap reticle to interact · Pinch to scale</span>
-            </div>
+            <img src="phone_ar_screen.png" alt="AkshAR Augmented Reality App Preview" class="device-screen-img" />
           </div>
-
-          <!-- THE POPPING-OUT 3D CHARACTER (breaks out of device bezel!) -->
-          <div class="ar-character-pop" aria-label="3D Elephant emerging from screen">
-            <img src="hero_elephant.png" alt="3D Toy Elephant in Augmented Reality" class="character-img" />
-            <div class="character-contact-shadow" aria-hidden="true"></div>
-          </div>
-
         </div>
 
       </div>
