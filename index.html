@@ -335,17 +335,18 @@
     /* ── Hero Right: Living 3D AR Device Showcase ── */
     .hero-panel-right {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
-      padding: 20px 0;
+      padding: 10px 0 20px;
       perspective: 1200px;
     }
     .ar-showcase-stage {
       position: relative;
       width: 100%;
       max-width: 440px;
-      height: 580px;
+      height: 570px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -389,11 +390,26 @@
       outline-offset: -1px;
       z-index: 25;
       white-space: nowrap;
-      transition: transform 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
       animation: orbitFloat 5.5s ease-in-out infinite;
     }
     .orbit-card:hover {
       transform: scale(1.06) translateY(-2px);
+    }
+    button.orbit-card {
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+    }
+    button.orbit-card:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.95),
+        0 18px 40px rgba(216,27,96,0.18);
+    }
+    button.orbit-card:active {
+      transform: scale(0.98);
     }
     .oc-icon {
       font-size: 1.35rem;
@@ -439,8 +455,8 @@
     /* Device Body Frame */
     .ar-device-frame {
       position: relative;
-      width: 280px;
-      height: 560px;
+      width: 275px;
+      height: 540px;
       border-radius: 46px;
       background: #0F172A;
       padding: 10px;
@@ -501,6 +517,69 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .device-screen-img.swapping {
+      opacity: 0.15;
+      transform: scale(0.96);
+    }
+
+    /* Curriculum World Switcher */
+    .world-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+        0 8px 24px rgba(0, 0, 0, 0.06);
+      outline: 1.5px solid rgba(255, 255, 255, 0.75);
+      outline-offset: -1px;
+      z-index: 30;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.35s ease both;
+    }
+    .world-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid transparent;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--slate-700);
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .world-pill:hover {
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--slate-900);
+      transform: translateY(-2px);
+    }
+    .world-pill.is-active {
+      background: #FFFFFF;
+      color: var(--vivid-pink);
+      border-color: rgba(255, 180, 214, 0.75);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 4px 16px rgba(216, 27, 96, 0.18);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .pill-emoji {
+      font-size: 1.15rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
     }
 
     /* Responsive Layout */
@@ -557,6 +636,19 @@
       }
       .orbit-card {
         display: none;
+      }
+      .world-switcher {
+        margin-top: 18px;
+        gap: 5px;
+        padding: 4px;
+      }
+      .world-pill {
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        gap: 5px;
+      }
+      .pill-emoji {
+        font-size: 0.95rem;
       }
     }
 
@@ -876,21 +968,21 @@
         <div class="stage-ambient-glow glow-pink" aria-hidden="true"></div>
         <div class="stage-ambient-glow glow-blue" aria-hidden="true"></div>
 
-        <!-- Orbit Badge 1 (Top Left): Audio Phonics -->
-        <div class="orbit-card oc-top-left" aria-hidden="true">
-          <div class="oc-icon">🔊</div>
+        <!-- Orbit Badge 1 (Top Left): Audio Phonics (Interactive!) -->
+        <button class="orbit-card oc-top-left" id="orbitPhonics" aria-label="Play Phonics Audio" title="Tap to listen to toddler phonics">
+          <div class="oc-icon" id="phonicsIcon">🔊</div>
           <div class="oc-text">
-            <span class="oc-label">Phonics Voice</span>
-            <span class="oc-title">"D is for Dog!"</span>
+            <span class="oc-label" id="phonicsLabel">Phonics Voice · Tap to Listen</span>
+            <span class="oc-title" id="phonicsTitle">"D is for Dog!"</span>
           </div>
-        </div>
+        </button>
 
         <!-- Orbit Badge 2 (Top Right): Living AR Toy -->
-        <div class="orbit-card oc-top-right" aria-hidden="true">
-          <div class="oc-icon">🐕</div>
+        <div class="orbit-card oc-top-right" id="orbitToy" aria-hidden="true">
+          <div class="oc-icon" id="toyIcon">🐕</div>
           <div class="oc-text">
-            <span class="oc-label">Living AR Toy</span>
-            <span class="oc-title">Tabletop 3D</span>
+            <span class="oc-label" id="toyLabel">Living AR Toy</span>
+            <span class="oc-title" id="toyTitle">Tabletop 3D</span>
           </div>
         </div>
 
@@ -913,10 +1005,26 @@
 
           <!-- Real Tabletop AR Experience Viewport -->
           <div class="device-screen">
-            <img src="phone_ar_screen.png" alt="AkshAR Augmented Reality App Preview" class="device-screen-img" />
+            <img id="deviceScreenImg" src="phone_ar_dog.png" alt="AkshAR Augmented Reality App Preview" class="device-screen-img" />
           </div>
         </div>
 
+      </div>
+
+      <!-- Interactive Curriculum World Switcher Pills -->
+      <div class="world-switcher" role="tablist" aria-label="Explore Akshar Curriculum Worlds">
+        <button class="world-pill is-active" data-world="dog" role="tab" aria-selected="true" aria-controls="deviceScreenImg">
+          <span class="pill-emoji">🐶</span> Animals
+        </button>
+        <button class="world-pill" data-world="elephant" role="tab" aria-selected="false" aria-controls="deviceScreenImg">
+          <span class="pill-emoji">🐘</span> Safari
+        </button>
+        <button class="world-pill" data-world="numbers" role="tab" aria-selected="false" aria-controls="deviceScreenImg">
+          <span class="pill-emoji">🔢</span> Numbers
+        </button>
+        <button class="world-pill" data-world="hub" role="tab" aria-selected="false" aria-controls="deviceScreenImg">
+          <span class="pill-emoji">🌟</span> All Worlds
+        </button>
       </div>
     </div>
 
@@ -1035,7 +1143,6 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        // Stagger cards within the same parent
         const siblings = entry.target.parentElement.querySelectorAll('.observe');
         const idx = Array.from(siblings).indexOf(entry.target);
         setTimeout(() => entry.target.classList.add('visible'), idx * 90);
@@ -1045,7 +1152,146 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.observe').forEach(el => observer.observe(el));
-</script>
 
+  // ─── Interactive Curriculum World Switcher ────────────────────────────────
+  const worlds = {
+    dog: {
+      img: 'phone_ar_dog.png',
+      alt: 'AkshAR Animals World — Golden Puppy Tabletop AR preview',
+      phonicsTitle: '"D is for Dog!"',
+      phonicsLabel: 'Phonics Voice · Tap to Listen',
+      toyIcon: '🐕',
+      toyLabel: 'Living AR Toy',
+      toyTitle: 'Tabletop 3D',
+      sound: 'sfx_dog.wav'
+    },
+    elephant: {
+      img: 'phone_ar_elephant.png',
+      alt: 'AkshAR Safari World — Elephant Tabletop AR preview',
+      phonicsTitle: '"E is for Elephant!"',
+      phonicsLabel: 'Phonics Voice · Tap to Listen',
+      toyIcon: '🐘',
+      toyLabel: 'Safari Adventure',
+      toyTitle: 'Tabletop Toy 3D',
+      sound: 'sfx_elephant.wav'
+    },
+    numbers: {
+      img: 'phone_ar_num2.png',
+      alt: 'AkshAR Numbers World — Number 2 Tabletop AR preview',
+      phonicsTitle: '"1, 2... Two!"',
+      phonicsLabel: 'Counting Voice · Tap to Listen',
+      toyIcon: '🔢',
+      toyLabel: 'Early Math',
+      toyTitle: '3D Number Blocks',
+      sound: 'sfx_pop.wav'
+    },
+    hub: {
+      img: 'phone_home.png',
+      alt: 'AkshAR Discovery Hub — 8 Wonder Worlds preview',
+      phonicsTitle: '"Explore All 8 Worlds"',
+      phonicsLabel: 'Wonder Meter · Tap to Listen',
+      toyIcon: '🌟',
+      toyLabel: '8 Wonder Worlds',
+      toyTitle: 'Curriculum Hub',
+      sound: 'sfx_pop.wav'
+    }
+  };
+
+  let activeWorldKey = 'dog';
+  let userInteracted = false;
+  let autoCycleTimer = null;
+
+  function playSFX(src) {
+    try {
+      const audio = new Audio(src);
+      audio.volume = 0.55;
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    } catch (e) {}
+  }
+
+  function setWorld(worldKey, playSound = true) {
+    if (!worlds[worldKey]) return;
+    activeWorldKey = worldKey;
+    const data = worlds[worldKey];
+
+    if (playSound) {
+      playSFX('sfx_pop.wav');
+    }
+
+    // Update active tab styles
+    document.querySelectorAll('.world-pill').forEach(pill => {
+      const isActive = pill.dataset.world === worldKey;
+      pill.classList.toggle('is-active', isActive);
+      pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Animate device screen image
+    const img = document.getElementById('deviceScreenImg');
+    if (img) {
+      img.classList.add('swapping');
+      setTimeout(() => {
+        img.src = data.img;
+        img.alt = data.alt;
+        img.onload = () => img.classList.remove('swapping');
+        // fallback in case cached
+        setTimeout(() => img.classList.remove('swapping'), 100);
+      }, 150);
+    }
+
+    // Update orbit badges
+    const phonicsTitle = document.getElementById('phonicsTitle');
+    const phonicsLabel = document.getElementById('phonicsLabel');
+    const toyIcon = document.getElementById('toyIcon');
+    const toyLabel = document.getElementById('toyLabel');
+    const toyTitle = document.getElementById('toyTitle');
+
+    if (phonicsTitle) phonicsTitle.textContent = data.phonicsTitle;
+    if (phonicsLabel) phonicsLabel.textContent = data.phonicsLabel;
+    if (toyIcon) toyIcon.textContent = data.toyIcon;
+    if (toyLabel) toyLabel.textContent = data.toyLabel;
+    if (toyTitle) toyTitle.textContent = data.toyTitle;
+  }
+
+  // Hook pill click events
+  document.querySelectorAll('.world-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      userInteracted = true;
+      clearInterval(autoCycleTimer);
+      setWorld(pill.dataset.world, true);
+    });
+  });
+
+  // Hook Phonics audio badge click event
+  const orbitPhonics = document.getElementById('orbitPhonics');
+  if (orbitPhonics) {
+    orbitPhonics.addEventListener('click', () => {
+      const soundFile = worlds[activeWorldKey]?.sound || 'sfx_pop.wav';
+      playSFX(soundFile);
+      orbitPhonics.style.transform = 'scale(1.12) translateY(-4px)';
+      setTimeout(() => {
+        orbitPhonics.style.transform = '';
+      }, 300);
+    });
+  }
+
+  // Auto-cycle through worlds every 7s until user interaction
+  const worldKeys = Object.keys(worlds);
+  let cycleIdx = 0;
+  autoCycleTimer = setInterval(() => {
+    if (!userInteracted) {
+      cycleIdx = (cycleIdx + 1) % worldKeys.length;
+      setWorld(worldKeys[cycleIdx], false);
+    }
+  }, 7000);
+
+  // Stop auto-cycling on hover over showcase
+  const showcase = document.querySelector('.hero-panel-right');
+  if (showcase) {
+    showcase.addEventListener('mouseenter', () => clearInterval(autoCycleTimer));
+  }
+</script>
 </body>
 </html>
